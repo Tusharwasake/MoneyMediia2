@@ -11,7 +11,11 @@ import cors from "cors";
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:8080", "http://127.0.0.1:8080"], // your frontend URLs
+  origin: [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+    "https://moneymediia1.netlify.app/",
+  ], // your frontend URLs
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept"],
   credentials: true,
