@@ -23,7 +23,7 @@ const corsOptions = {
 };
 
 // Apply CORS before any other middleware
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Body parsing middleware
 app.use(express.json());
