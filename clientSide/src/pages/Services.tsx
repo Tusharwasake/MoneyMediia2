@@ -37,34 +37,108 @@ const Services = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [retryCount, setRetryCount] = useState(0);
 
   const location = useLocation();
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await getAllServices();
-        console.log("API Response:", response); // Debug log
+  // Modified fetchServices function with retry logic
+  const fetchServices = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        // Get services data from API response
-        const serviceData = response.data || response;
+      // Add a cache-busting parameter to prevent caching issues on mobile
+      const cacheBuster = new Date().getTime();
+      // Check if getAllServices accepts a parameter, if not, we need to modify the API function
+      // For now, we'll call it without parameters since your original code didn't use any
+      const response = await getAllServices();
 
-        if (!Array.isArray(serviceData)) {
-          throw new Error("Invalid data format from API");
-        }
+      // More robust response handling
+      let serviceData;
+      if (response && "data" in response) {
+        serviceData = response.data;
+      } else if (Array.isArray(response)) {
+        serviceData = response;
+      } else if (response && typeof response === "object") {
+        // Since TypeScript is complaining about properties, we'll use a type assertion
+        // to avoid the TypeScript errors
+        serviceData = response;
+      } else {
+        throw new Error("Invalid response format");
+      }
 
-        // Use services exactly as returned from API
-        setServices(serviceData);
-      } catch (error) {
-        console.error("Failed to fetch services", error);
-        setError("Unable to load services. Please try again later.");
-      } finally {
+      if (!Array.isArray(serviceData)) {
+        throw new Error(
+          "Expected an array of services but received a different format"
+        );
+      }
+
+      // Validate each service has required fields
+      const validServices = serviceData.filter(
+        (service) =>
+          service &&
+          typeof service === "object" &&
+          service.title &&
+          service.description
+      );
+
+      if (validServices.length === 0 && serviceData.length > 0) {
+        throw new Error(
+          "Services data was found but is missing required fields"
+        );
+      }
+
+      setServices(validServices);
+    } catch (error) {
+      console.error("Failed to fetch services", error);
+
+      // Provide more specific error messages
+      if (
+        error instanceof TypeError &&
+        error.message.includes("NetworkError")
+      ) {
+        setError("Network error. Please check your internet connection.");
+      } else if (
+        error instanceof TypeError &&
+        error.message.includes("Failed to fetch")
+      ) {
+        setError("Unable to connect to the server. Please try again later.");
+      } else {
+        setError(
+          `Unable to load services: ${
+            error instanceof Error ? error.message : "Unknown error"
+          }`
+        );
+      }
+
+      // Keep services data if we had it before
+      if (services.length > 0) {
         setLoading(false);
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchServices();
-  }, []);
+
+    // Set up interval to periodically check connection on mobile
+    const intervalId = setInterval(() => {
+      if (navigator.onLine && services.length === 0) {
+        setRetryCount((prev) => prev + 1);
+      }
+    }, 10000); // Every 10 seconds
+
+    return () => clearInterval(intervalId);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Add effect for retrying when connection is restored or retry button is clicked
+  useEffect(() => {
+    if (retryCount > 0) {
+      fetchServices();
+    }
+  }, [retryCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     // Scroll to specific service if requested
@@ -81,11 +155,11 @@ const Services = () => {
   // Get unique categories from API data
   const categories = [
     { value: "all", label: "All Services" },
-    ...Array.from(new Set(services.map((service1) => service1.category)))
+    ...Array.from(new Set(services.map((service) => service.category)))
       .filter(Boolean)
-      .map((category1) => ({
-        value: category1 as string,
-        label: category1 as string,
+      .map((category) => ({
+        value: category as string,
+        label: category as string,
       })),
   ];
 
@@ -98,7 +172,6 @@ const Services = () => {
     return matchesSearch && matchesCategory;
   });
 
-  console.log(filteredServices, "tushae");
   if (loading) {
     return (
       <Layout>
@@ -173,6 +246,14 @@ const Services = () => {
           <Alert variant="destructive" className="mb-12 max-w-4xl mx-auto">
             <AlertCircle className="h-4 w-4" />
             <AlertDescription>{error}</AlertDescription>
+            <Button
+              onClick={() => setRetryCount((prev) => prev + 1)}
+              variant="outline"
+              className="ml-4"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Retry
+            </Button>
           </Alert>
         )}
         {filteredServices.length > 0 ? (
@@ -184,17 +265,23 @@ const Services = () => {
                 id={service.id}
               >
                 <div className="aspect-video overflow-hidden relative">
-                  <img
-                    src={service.imageSrc}
-                    alt={service.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                      e.currentTarget.parentElement?.classList.add(
-                        "bg-gray-200"
-                      );
-                    }}
-                  />
+                  {service.imageSrc ? (
+                    <img
+                      src={service.imageSrc}
+                      alt={service.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                        e.currentTarget.parentElement?.classList.add(
+                          "bg-gray-200"
+                        );
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-400">No image available</span>
+                    </div>
+                  )}
                   {service.isPopular && (
                     <div className="absolute top-4 right-4 bg-money-green text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
                       <CheckCircle className="h-4 w-4" />
@@ -237,12 +324,21 @@ const Services = () => {
                 ? `No services found matching "${searchQuery}"`
                 : "No services available"}
             </p>
-            {searchQuery && (
+            {!error && searchQuery && (
               <Button
                 onClick={() => setSearchQuery("")}
                 className="btn-gradient"
               >
                 Clear Search
+              </Button>
+            )}
+            {!error && !searchQuery && services.length === 0 && (
+              <Button
+                onClick={() => setRetryCount((prev) => prev + 1)}
+                className="btn-gradient"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Retry Loading Services
               </Button>
             )}
           </div>
