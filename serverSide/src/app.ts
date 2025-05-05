@@ -14,7 +14,7 @@ const corsOptions = {
   origin: [
     "http://localhost:8080",
     "http://127.0.0.1:8080",
-    "https://moneymediia1.netlify.app/",
+    "https://moneymediia2.onrender.com",
   ], // your frontend URLs
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept"],
