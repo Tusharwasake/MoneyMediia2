@@ -87,7 +87,7 @@ const CallToAction = () => {
               <div className="rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
                 {/* Use your actual financial content image */}
                 <img
-                  src="/images/financial-content-marketing.jpg"
+                  src="https://plus.unsplash.com/premium_photo-1663100794696-6b7afa02016c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Financial content marketing visualization with charts and graphics"
                   className="w-full h-full object-cover"
                   style={{ backgroundColor: "#1a2332" }}
