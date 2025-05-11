@@ -17,16 +17,13 @@ const PortfolioPreview = () => {
 
         // Fetch 3 featured portfolio items
         const response = await getFeaturedPortfolioItems(3);
-        console.log("API Response:", response.data);
+  
 
         if (
           response.data.status === "success" &&
           response.data.data.portfolioItems?.length
         ) {
-          console.log(
-            "Fetched portfolio items:",
-            response.data.data.portfolioItems
-          );
+ 
           setPortfolioItems(response.data.data.portfolioItems);
         } else {
           throw new Error("No portfolio items found.");
