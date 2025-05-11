@@ -141,7 +141,9 @@ export const getPortfolioItemById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
-    const portfolioItem = await PortfolioItem.findById(id);
+    const portfolioItem = await PortfolioItem.findOne({
+      someOtherField: "data",
+    });
 
     if (!portfolioItem) {
       return next(new AppError("No portfolio item found with that ID", 404));
@@ -274,7 +276,7 @@ export const getRelatedBlogPosts = catchAsync(
     const { id } = req.params;
 
     // First find the blog post to get its category and industry
-    const blogPost = await PortfolioItem.findById(id);
+    const blogPost = await PortfolioItem.findOne({ someOtherField: "data" });
 
     if (!blogPost || blogPost.type !== "blog") {
       return next(new AppError("No blog post found with that ID", 404));

@@ -195,7 +195,7 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { getAllServices } from "@/api/servicesAPI";
+import { getAllServices } from "@/api/services.api";
 
 interface Service {
   _id: string;

@@ -57,9 +57,9 @@ const Navbar = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Redirect to services with search query parameter
+      // Redirect to the services page with the search query as a parameter
       navigate(`/services?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery("");
+      setSearchQuery(""); // Clear the search input after navigating
     }
   };
 
@@ -153,18 +153,16 @@ const Navbar = () => {
             {/* Inline Search Form */}
             <form
               onSubmit={handleSearch}
-              className="flex items-center space-x-2"
+              className="relative flex items-center space-x-2"
             >
-              <div className="relative">
-                <Search className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <Input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-64 pl-10 pr-4 py-2 rounded-full border-gray-300 focus:border-money-teal focus:ring-1 focus:ring-money-teal"
-                />
-              </div>
+              <Search className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-64 pl-10 pr-4 py-2 rounded-full border-gray-300 focus:border-money-teal focus:ring-1 focus:ring-money-teal"
+              />
             </form>
             <Button className="btn-gradient px-6 py-2 font-medium shadow-lg hover:shadow-xl transition-shadow">
               <Link to="/contact">Get in Touch</Link>

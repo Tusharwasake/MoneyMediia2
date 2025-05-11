@@ -31,6 +31,7 @@ const contactSchema = new mongoose_1.default.Schema({
     serviceOfInterest: {
         type: String,
         enum: exports.serviceTypes,
+        required: true,
     },
     message: {
         type: String,

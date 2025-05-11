@@ -2,20 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Play, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { getFeaturedPortfolioItems } from "@/api/portfolio.api";
-
-// Define the PortfolioItem interface
-interface PortfolioItem {
-  _id: string;
-  type: string;
-  title: string;
-  category: string;
-  client: string;
-  thumbnail: string;
-  videoUrl?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { getFeaturedPortfolioItems, PortfolioItem } from "@/api/portfolio.api";
 
 const PortfolioPreview = () => {
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
@@ -27,16 +14,31 @@ const PortfolioPreview = () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await getFeaturedPortfolioItems(3); // Fetch 3 featured items
-        // Log the response
-        if (response.data.status === "success") {
+
+        // Fetch 3 featured portfolio items
+        const response = await getFeaturedPortfolioItems(3);
+        console.log("API Response:", response.data);
+
+        if (
+          response.data.status === "success" &&
+          response.data.data.portfolioItems?.length
+        ) {
+          console.log(
+            "Fetched portfolio items:",
+            response.data.data.portfolioItems
+          );
           setPortfolioItems(response.data.data.portfolioItems);
         } else {
-          throw new Error("Failed to fetch portfolio items");
+          throw new Error("No portfolio items found.");
         }
-      } catch (err) {
-        console.error("Error fetching portfolio items:", err);
-        setError("Failed to load portfolio items");
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error("Error fetching portfolio items:", err);
+          setError(err.message || "Failed to load portfolio items.");
+        } else {
+          console.error("Unexpected error:", err);
+          setError("An unexpected error occurred.");
+        }
       } finally {
         setIsLoading(false);
       }
@@ -114,6 +116,7 @@ const PortfolioPreview = () => {
     );
   }
 
+  // Render portfolio items
   return (
     <section className="section">
       <div className="container-custom">

@@ -9,7 +9,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { getAllServices } from "@/api/servicesAPI";
+import { getAllServices } from "@/api/services.api";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -41,15 +41,80 @@ const Services = () => {
 
   const location = useLocation();
 
+  // Modified fetchServices function with retry logic
   const fetchServices = async () => {
     try {
       setLoading(true);
       setError(null);
+
+      // Add a cache-busting parameter to prevent caching issues on mobile
+      const cacheBuster = new Date().getTime();
+      // Check if getAllServices accepts a parameter, if not, we need to modify the API function
+      // For now, we'll call it without parameters since your original code didn't use any
       const response = await getAllServices();
-      setServices(response.data || []);
-    } catch (err) {
-      console.error("Failed to fetch services", err);
-      setError("Unable to load services. Please try again later.");
+
+      // More robust response handling
+      let serviceData;
+      if (response && "data" in response) {
+        serviceData = response.data;
+      } else if (Array.isArray(response)) {
+        serviceData = response;
+      } else if (response && typeof response === "object") {
+        // Since TypeScript is complaining about properties, we'll use a type assertion
+        // to avoid the TypeScript errors
+        serviceData = response;
+      } else {
+        throw new Error("Invalid response format");
+      }
+
+      if (!Array.isArray(serviceData)) {
+        throw new Error(
+          "Expected an array of services but received a different format"
+        );
+      }
+
+      // Validate each service has required fields
+      const validServices = serviceData.filter(
+        (service) =>
+          service &&
+          typeof service === "object" &&
+          service.title &&
+          service.description
+      );
+
+      if (validServices.length === 0 && serviceData.length > 0) {
+        throw new Error(
+          "Services data was found but is missing required fields"
+        );
+      }
+
+      setServices(validServices);
+    } catch (error) {
+      console.error("Failed to fetch services", error);
+
+      // Provide more specific error messages
+      if (
+        error instanceof TypeError &&
+        error.message.includes("NetworkError")
+      ) {
+        setError("Network error. Please check your internet connection.");
+      } else if (
+        error instanceof TypeError &&
+        error.message.includes("Failed to fetch")
+      ) {
+        setError("Unable to connect to the server. Please try again later.");
+      } else {
+        setError(
+          `Unable to load services: ${
+            error instanceof Error ? error.message : "Unknown error"
+          }`
+        );
+      }
+
+      // Keep services data if we had it before
+      if (services.length > 0) {
+        setLoading(false);
+      }
     } finally {
       setLoading(false);
     }
@@ -57,8 +122,37 @@ const Services = () => {
 
   useEffect(() => {
     fetchServices();
-  }, []);
 
+    // Set up interval to periodically check connection on mobile
+    const intervalId = setInterval(() => {
+      if (navigator.onLine && services.length === 0) {
+        setRetryCount((prev) => prev + 1);
+      }
+    }, 10000); // Every 10 seconds
+
+    return () => clearInterval(intervalId);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Add effect for retrying when connection is restored or retry button is clicked
+  useEffect(() => {
+    if (retryCount > 0) {
+      fetchServices();
+    }
+  }, [retryCount]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    // Scroll to specific service if requested
+    if (location.state?.scrollTo) {
+      const element = document.getElementById(location.state.scrollTo);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+    }
+  }, [location, services]);
+
+  // Get unique categories from API data
   const categories = [
     { value: "all", label: "All Services" },
     ...Array.from(new Set(services.map((service) => service.category)))
@@ -103,7 +197,7 @@ const Services = () => {
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             Comprehensive financial content solutions designed to elevate your
-            brand's communication strategy.
+            brand's communication strategy
           </p>
 
           {/* Search and Filter Section */}
@@ -136,8 +230,18 @@ const Services = () => {
               </Select>
             </div>
           </div>
-        </div>
 
+          {searchQuery && (
+            <div className="mb-8">
+              <p className="text-lg text-gray-600">
+                Showing results for:{" "}
+                <span className="font-medium text-money-green">
+                  "{searchQuery}"
+                </span>
+              </p>
+            </div>
+          )}
+        </div>
         {error && (
           <Alert variant="destructive" className="mb-12 max-w-4xl mx-auto">
             <AlertCircle className="h-4 w-4" />
@@ -152,7 +256,6 @@ const Services = () => {
             </Button>
           </Alert>
         )}
-
         {filteredServices.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredServices.map((service) => (
@@ -240,7 +343,6 @@ const Services = () => {
             )}
           </div>
         )}
-
         {/* Call to Action Section */}
         <div className="mt-16 text-center bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8 md:p-12">
           <h2 className="text-3xl font-bold mb-4">

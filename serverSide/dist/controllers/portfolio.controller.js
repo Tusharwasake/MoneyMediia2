@@ -101,7 +101,9 @@ exports.getPortfolioItemsByIndustry = (0, catchAsync_1.catchAsync)((req, res, ne
 // Get a single portfolio item by ID
 exports.getPortfolioItemById = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const portfolioItem = yield PortfolioItem_model_1.default.findById(id);
+    const portfolioItem = yield PortfolioItem_model_1.default.findOne({
+        someOtherField: "data",
+    });
     if (!portfolioItem) {
         return next(new appError_1.AppError("No portfolio item found with that ID", 404));
     }
@@ -200,7 +202,7 @@ exports.getBlogPosts = (0, catchAsync_1.catchAsync)((req, res, next) => __awaite
 exports.getRelatedBlogPosts = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     // First find the blog post to get its category and industry
-    const blogPost = yield PortfolioItem_model_1.default.findById(id);
+    const blogPost = yield PortfolioItem_model_1.default.findOne({ someOtherField: "data" });
     if (!blogPost || blogPost.type !== "blog") {
         return next(new appError_1.AppError("No blog post found with that ID", 404));
     }
