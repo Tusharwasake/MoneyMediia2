@@ -1,9 +1,7 @@
-import axios from "axios";
 
-// Create axios instance
-const api = axios.create({
-  baseURL: "https://moneymediia2.onrender.com",
-});
+
+
+import api from "./axios";
 
 // GET request for clients
 export const getClients = () => {

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
-import { subscribeNewsletter } from "@/api/servicesAPI";
+import { subscribeNewsletter } from "@/api/newsletter";
 
 const NewsletterSignup = () => {
   const [email, setEmail] = useState("");

@@ -12,7 +12,7 @@ import {
   Linkedin,
   MapPin,
 } from "lucide-react";
-import { subscribeNewsletter } from "@/api/servicesAPI";
+import { subscribeNewsletter } from "@/api/newsletter";
 import { toast } from "sonner";
 
 const Footer = () => {
