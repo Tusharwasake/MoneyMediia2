@@ -301,7 +301,7 @@ const Portfolio = () => {
                       alt={item.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       onError={(e) => {
-                        e.currentTarget.src = "/api/placeholder/800/600";
+                        e.currentTarget.src = "https://placehold.co/400";
                         e.currentTarget.onerror = null;
                       }}
                     />

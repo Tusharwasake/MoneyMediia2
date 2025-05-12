@@ -37,7 +37,8 @@ const PremiumFinancialServicesGrid = () => {
       title: "Script & Blog Writing",
       description:
         "Clear, engaging finance scripts and blogs that simplify complex topics",
-      image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      image:
+        "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       category: "content",
       isPopular: true,
       ctaText: "Craft Your Narrative",
@@ -51,7 +52,8 @@ const PremiumFinancialServicesGrid = () => {
       title: "Infographics for Social & Ads",
       description:
         "Visually appealing infographics to boost engagement for marketing campaigns",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      image:
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       category: "design",
       isPopular: false,
       ctaText: "Visualize Your Insights",
@@ -65,7 +67,8 @@ const PremiumFinancialServicesGrid = () => {
       title: "End-to-End Video Production",
       description:
         "You just need to give us the topic, we deliver the final video content",
-      image: "https://images.unsplash.com/photo-1540397106260-e24a507a08ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      image:
+        "https://images.unsplash.com/photo-1540397106260-e24a507a08ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       category: "visual",
       isPopular: true,
       ctaText: "Elevate Your Content",
@@ -79,7 +82,8 @@ const PremiumFinancialServicesGrid = () => {
       title: "Language Translations & Dubbing",
       description:
         "Translate videos into major Indian languages to reach all vernacular audiences",
-      image: "https://plus.unsplash.com/premium_photo-1661488481622-df81506bb046?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      image:
+        "https://plus.unsplash.com/premium_photo-1661488481622-df81506bb046?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       category: "content",
       isPopular: false,
       ctaText: "Expand Globally",
@@ -93,7 +97,8 @@ const PremiumFinancialServicesGrid = () => {
       title: "Professional Shooting",
       description:
         "Videos, podcasts, events—reels, podcasts, and more with professional quality",
-      image: "https://images.unsplash.com/photo-1633113088983-12fb3b2fe0ac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      image:
+        "https://images.unsplash.com/photo-1633113088983-12fb3b2fe0ac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       category: "visual",
       isPopular: true,
       ctaText: "Capture Excellence",
@@ -107,7 +112,8 @@ const PremiumFinancialServicesGrid = () => {
       title: "Creative Brand Shoots",
       description:
         "High-quality brand shoots for compelling ads and TV commercials",
-      image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      image:
+        "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       category: "visual",
       isPopular: false,
       ctaText: "Transform Your Image",
@@ -119,9 +125,9 @@ const PremiumFinancialServicesGrid = () => {
       id: "podcasts-007",
       serviceId: "podcasts",
       title: "Audio Podcasts",
-      description:
-        "Full-service production of finance-focused audio podcasts",
-      image: "https://images.unsplash.com/photo-1589903308904-1010c2294adc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      description: "Full-service production of finance-focused audio podcasts",
+      image:
+        "https://images.unsplash.com/photo-1589903308904-1010c2294adc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       category: "visual",
       isPopular: false,
       ctaText: "Amplify Your Expertise",
@@ -135,7 +141,8 @@ const PremiumFinancialServicesGrid = () => {
       title: "Corporate Videos",
       description:
         "Polished corporate videos showcasing your products, services, and brand stories",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      image:
+        "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
       category: "visual",
       isPopular: false,
       ctaText: "Showcase Your Excellence",
@@ -171,9 +178,11 @@ const PremiumFinancialServicesGrid = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header Section with animation */}
-        <div className={`text-center mb-24 transition-all duration-1000 transform ${
-          animateIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-        }`}>
+        <div
+          className={`text-center mb-24 transition-all duration-1000 transform ${
+            animateIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          }`}
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 bg-green-100">
             <span className="mr-1">✨</span>
             <span className="text-sm font-medium text-green-600">
@@ -238,7 +247,7 @@ const PremiumFinancialServicesGrid = () => {
                   }}
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = "/api/placeholder/800/600";
+                    e.target.src = "https://placehold.co/600x400/png";
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30"></div>
@@ -264,42 +273,50 @@ const PremiumFinancialServicesGrid = () => {
               </div>
 
               {/* Content overlay */}
-              <div className="absolute inset-x-0 bottom-0 px-8 pt-16 pb-8 flex flex-col justify-end z-10 transition-all duration-500 h-full"
+              <div
+                className="absolute inset-x-0 bottom-0 px-8 pt-16 pb-8 flex flex-col justify-end z-10 transition-all duration-500 h-full"
                 style={{
                   transform: `translateY(${
                     hoveredCard === service.id ? "0" : "80px"
                   })`,
-                }}>
+                }}
+              >
                 <div className="flex flex-col h-full justify-end">
                   {/* Title with underline */}
                   <h3 className="text-white text-2xl font-bold mb-3 relative pb-3">
                     {service.title}
-                    <span className="absolute bottom-0 left-0 h-1 rounded-full bg-gradient-to-r from-green-500 to-teal-500 w-16 transition-all duration-500"
+                    <span
+                      className="absolute bottom-0 left-0 h-1 rounded-full bg-gradient-to-r from-green-500 to-teal-500 w-16 transition-all duration-500"
                       style={{
                         width: hoveredCard === service.id ? "40%" : "15%",
-                      }}></span>
+                      }}
+                    ></span>
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-300 mb-8 transition-all duration-500 line-clamp-3"
+                  <p
+                    className="text-gray-300 mb-8 transition-all duration-500 line-clamp-3"
                     style={{
                       opacity: hoveredCard === service.id ? 1 : 0.7,
                       transform: `translateY(${
                         hoveredCard === service.id ? "0" : "20px"
                       })`,
-                    }}>
+                    }}
+                  >
                     {service.description}
                   </p>
 
                   {/* Stats badges */}
                   <div className="flex flex-col gap-3 mb-8">
-                    <div className="rounded-lg p-3 transition-all duration-500 flex items-center gap-3 bg-white/10 backdrop-blur-sm border-l-4 border-green-500"
+                    <div
+                      className="rounded-lg p-3 transition-all duration-500 flex items-center gap-3 bg-white/10 backdrop-blur-sm border-l-4 border-green-500"
                       style={{
                         opacity: hoveredCard === service.id ? 1 : 0,
                         transform: `translateY(${
                           hoveredCard === service.id ? "0" : "20px"
                         })`,
-                      }}>
+                      }}
+                    >
                       <div className="flex-shrink-0 h-9 w-9 rounded-full flex items-center justify-center bg-green-500/30">
                         📊
                       </div>
@@ -308,14 +325,16 @@ const PremiumFinancialServicesGrid = () => {
                       </p>
                     </div>
 
-                    <div className="rounded-lg p-3 transition-all duration-500 flex items-center gap-3 bg-white/10 backdrop-blur-sm border-l-4 border-teal-500"
+                    <div
+                      className="rounded-lg p-3 transition-all duration-500 flex items-center gap-3 bg-white/10 backdrop-blur-sm border-l-4 border-teal-500"
                       style={{
                         opacity: hoveredCard === service.id ? 1 : 0,
                         transform: `translateY(${
                           hoveredCard === service.id ? "0" : "20px"
                         })`,
                         transitionDelay: "0.2s",
-                      }}>
+                      }}
+                    >
                       <div className="flex-shrink-0 h-9 w-9 rounded-full flex items-center justify-center bg-teal-500/30">
                         📈
                       </div>
@@ -365,7 +384,11 @@ const PremiumFinancialServicesGrid = () => {
                 content solutions to transform their messaging and drive
                 measurable results
               </p>
-              <a href="https://calendly.com/akshay-satpaise99/30min" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://calendly.com/akshay-satpaise99/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <button className="bg-white hover:bg-gray-50 font-bold py-5 px-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-lg flex items-center gap-3 mx-auto text-green-600">
                   Schedule Free Consultation
                   <ChevronRight className="w-5 h-5" />

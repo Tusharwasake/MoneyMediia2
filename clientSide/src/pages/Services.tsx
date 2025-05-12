@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import {
@@ -61,107 +61,22 @@ const Services = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Modified fetchServices function with retry logic
-  const fetchServices = async () => {
-    try {
-      setLoading(true);
-      setError(null);
+  const isFetching = useRef(false); // Use useRef instead of a local variable
 
-      // Add a cache-busting parameter to prevent caching issues on mobile
-      const cacheBuster = new Date().getTime();
-      // Check if getAllServices accepts a parameter, if not, we need to modify the API function
-      // For now, we'll call it without parameters since your original code didn't use any
-      const response = await getAllServices();
-
-      // More robust response handling
-      let serviceData;
-      if (response && "data" in response) {
-        serviceData = response.data;
-      } else if (Array.isArray(response)) {
-        serviceData = response;
-      } else if (response && typeof response === "object") {
-        // Since TypeScript is complaining about properties, we'll use a type assertion
-        // to avoid the TypeScript errors
-        serviceData = response;
-      } else {
-        throw new Error("Invalid response format");
-      }
-
-      if (!Array.isArray(serviceData)) {
-        throw new Error(
-          "Expected an array of services but received a different format"
-        );
-      }
-
-      // Validate each service has required fields
-      const validServices = serviceData.filter(
-        (service) =>
-          service &&
-          typeof service === "object" &&
-          service.title &&
-          service.description
-      );
-
-      if (validServices.length === 0 && serviceData.length > 0) {
-        throw new Error(
-          "Services data was found but is missing required fields"
-        );
-      }
-
-      setServices(validServices);
-    } catch (error) {
-      console.error("Failed to fetch services", error);
-
-      // Provide more specific error messages
-      if (
-        error instanceof TypeError &&
-        error.message.includes("NetworkError")
-      ) {
-        setError("Network error. Please check your internet connection.");
-      } else if (
-        error instanceof TypeError &&
-        error.message.includes("Failed to fetch")
-      ) {
-        setError("Unable to connect to the server. Please try again later.");
-      } else {
-        setError(
-          `Unable to load services: ${
-            error instanceof Error ? error.message : "Unknown error"
-          }`
-        );
-      }
-
-      // Keep services data if we had it before
-      if (services.length > 0) {
-        setLoading(false);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Fetch services on mount
   useEffect(() => {
     fetchServices();
+  }, []);
 
-    // Set up interval to periodically check connection on mobile
-    const intervalId = setInterval(() => {
-      if (navigator.onLine && services.length === 0) {
-        setRetryCount((prev) => prev + 1);
-      }
-    }, 10000); // Every 10 seconds
-
-    return () => clearInterval(intervalId);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Add effect for retrying when connection is restored or retry button is clicked
+  // Retry only when retryCount changes
   useEffect(() => {
-    if (retryCount > 0) {
+    if (navigator.onLine && services.length === 0 && retryCount > 0) {
       fetchServices();
     }
-  }, [retryCount]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [retryCount]);
 
+  // Scroll to specific service if requested
   useEffect(() => {
-    // Scroll to specific service if requested
     if (location.state?.scrollTo) {
       const element = document.getElementById(location.state.scrollTo);
       if (element) {
@@ -171,6 +86,30 @@ const Services = () => {
       }
     }
   }, [location, services]);
+
+  // Modified fetchServices function with retry logic
+  const fetchServices = async () => {
+    if (isFetching.current) return; // Prevent overlapping calls
+    isFetching.current = true;
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await getAllServices();
+      if (response && response.data) {
+        setServices(response.data);
+      } else {
+        throw new Error("Invalid response format");
+      }
+    } catch (error) {
+      console.error("Failed to fetch services", error);
+      setError("Unable to load services. Please try again later.");
+    } finally {
+      setLoading(false);
+      isFetching.current = false;
+    }
+  };
 
   // Get unique categories from API data
   const categories = [
@@ -404,6 +343,7 @@ const Services = () => {
           </div>
 
           {/* Services Grid with enhanced design */}
+
           {filteredServices.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredServices.map((service, index) => (
@@ -474,10 +414,8 @@ const Services = () => {
                       <Link
                         to={`/services/${service.id}`}
                         onClick={(e) => {
-                          if (window.location.pathname.includes("/services")) {
-                            e.preventDefault();
-                            window.location.href = `/services/${service.id}`;
-                          }
+                          e.preventDefault();
+                          window.location.href = `/services/${service.id}`;
                         }}
                       >
                         <Button
