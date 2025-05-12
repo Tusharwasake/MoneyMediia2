@@ -5,7 +5,7 @@
 
 ## Base URL
 ```
-https://api.moneymedia.com
+https://moneymediia1.netlify.app/
 ```
 
 ## Authentication
