@@ -62,7 +62,8 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
+    const formElement = e.currentTarget; // Store the form element reference
+    const formData = new FormData(formElement);
     const data: ContactFormData = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
@@ -79,7 +80,11 @@ const Contact = () => {
           title: "Message Sent Successfully",
           description: response.data.message,
         });
-        e.currentTarget.reset(); // Reset the form
+
+        // Check if the form element still exists before resetting
+        if (formElement) {
+          formElement.reset();
+        }
 
         // Reset form success after a delay
         setTimeout(() => {
