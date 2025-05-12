@@ -14,7 +14,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import CareerPage from "@/pages/careers"; // Import the Career Page
 import PrivacyPolicy from "@/pages/staticPage/PrivacyPolicy"; // Import Privacy Policy
-import TermsOfService from "@/pages/staticPage/terms"; // Import Terms of Service
+import TermsOfService from "./pages/staticPage/Terms"; // Import Terms of Service
 
 const queryClient = new QueryClient();
 
